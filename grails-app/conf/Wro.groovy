@@ -1,7 +1,7 @@
 groups {
   all {
 	css(minimize: false, "/css/*.css")
-	css(minimize: false , "/less/*.less")
+	// css(minimize: false , "/less/*.less")
     js "/js/*.js"
   }
   bootstrap {

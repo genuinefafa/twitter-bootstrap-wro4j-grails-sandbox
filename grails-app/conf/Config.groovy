@@ -11,6 +11,9 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
+grails.config.locations = [ configs.WroConfig ]
+	
+
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
@@ -88,4 +91,153 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+}
+
+// Uncomment and edit the following lines to start using Grails encoding & escaping improvements
+
+/* remove this line
+// GSP settings
+grails {
+	views {
+		gsp {
+			encoding = 'UTF-8'
+			htmlcodec = 'xml' // use xml escaping instead of HTML4 escaping
+			codecs {
+				expression = 'html' // escapes values inside null
+				scriptlet = 'none' // escapes output from scriptlets in GSPs
+				taglib = 'none' // escapes output from taglibs
+				staticparts = 'none' // escapes output from static template parts
+			}
+		}
+		// escapes all not-encoded output at final stage of outputting
+		filteringCodecForContentType {
+			//'text/html' = 'html'
+		}
+	}
+}
+remove this line */
+
+
+
+
+/*********************************************************************************/
+/* Wro Config */
+/*********************************************************************************/
+/*
+import ro.isdc.wro.model.resource.processor.impl.BomStripperPreProcessor
+import ro.isdc.wro.model.resource.processor.impl.js.JSMinProcessor
+import ro.isdc.wro.model.resource.processor.impl.js.SemicolonAppenderPreProcessor
+import ro.isdc.wro.model.resource.processor.impl.css.*
+*/
+import ro.isdc.wro.model.resource.processor.impl.*
+import ro.isdc.wro.model.resource.processor.impl.js.*
+import ro.isdc.wro.model.resource.processor.impl.css.*
+import ro.isdc.wro.model.resource.processor.decorator.*
+import ro.isdc.wro.extensions.processor.css.*
+import ro.isdc.wro.extensions.processor.js.*
+
+import ro.isdc.wro.model.resource.locator.UrlUriLocator
+import ro.isdc.wro.model.resource.locator.ClasspathUriLocator
+import ro.isdc.wro.model.resource.locator.ServletContextUriLocator
+
+println "WroConfig loading"
+
+/**
+ * Boolean flag for enable/disable resource gzipping.
+ */
+wro.gzipResources = true
+/**
+ * Parameter allowing to turn jmx on or off.
+ */
+wro.jmxEnabled = true
+/**
+ * Parameter containing an integer value for specifying how often (in seconds) the cache should be refreshed.
+ */
+wro.cacheUpdatePeriod = 0
+/**
+ * Parameter containing an integer value for specifying how often (in seconds) the model should be refreshed.
+ */
+wro.modelUpdatePeriod = 0
+/**
+ * Disable cache configuration option. When true, the processed content won't be cached in DEVELOPMENT mode. In
+ * DEPLOYMENT mode changing this flag will have no effect.
+ */
+wro.disableCache = false
+/**
+ * Instructs wro4j to not throw an exception when a resource is missing.
+ */
+wro.ignoreMissingResources = true
+/**
+ * Encoding to use when reading and writing bytes from/to stream
+ */
+wro.encoding = null
+/**
+ * The fully qualified class name of the {@link ro.isdc.wro.manager.WroManagerFactory} implementation.
+ */
+wro.managerFactoryClassName = "wro4j.grails.plugin.GrailsWroManagerFactory"
+
+wro.grailsWroManagerFactory.preProcessors = [
+	new CssUrlRewritingProcessor(),
+	new CssImportPreProcessor(),
+	new SemicolonAppenderPreProcessor(),
+	new JSMinProcessor(),
+	new JawrCssMinifierProcessor(),
+	ExtensionsAwareProcessorDecorator.decorate(new CoffeeScriptProcessor()).addExtension("coffee"),
+]
+wro.grailsWroManagerFactory.postProcessors = [
+	new CssVariablesProcessor(),
+	new LessCssProcessor(),
+]
+
+
+
+/** PreProcessor used by wro4j.grails.plugin.GrailsWroManagerFactory  */
+/**
+wro.grailsWroManagerFactory.preProcessors = [
+	new CssUrlRewritingProcessor(),
+	new CssImportPreProcessor(),
+//    new BomStripperPreProcessor(),
+	new SemicolonAppenderPreProcessor(),
+	new JSMinProcessor(),
+	new JawrCssMinifierProcessor(),
+	ExtensionsAwareProcessorDecorator.decorate(new CoffeeScriptProcessor()).addExtension("coffee"),
+	
+]
+**/
+
+
+/** postProcessor used by wro4j.grails.plugin.GrailsWroManagerFactory  */
+/**
+wro.grailsWroManagerFactory.postProcessors = [
+	new CssVariablesProcessor(),
+	ExtensionsAwareProcessorDecorator.decorate(new LessCssProcessor()).addExtension("less"),
+]
+**/
+
+/** uriLocator used by wro4j.grails.plugin.GrailsWroManagerFactory  */
+wro.grailsWroManagerFactory.uriLocators = [
+	new ServletContextUriLocator(),
+	new ClasspathUriLocator(),
+	new UrlUriLocator(),
+]
+
+/**
+ * the name of MBean to be used by JMX to configure wro4j.
+ */
+wro.mbeanName = null
+/**
+ * The parameter used to specify headers to put into the response, used mainly for caching.
+ */
+wro.header = null
+
+environments {
+  production {
+	wro.debug = false
+  }
+  development {
+	wro.debug = true
+  }
+  test {
+	wro.debug = true
+  }
 }
