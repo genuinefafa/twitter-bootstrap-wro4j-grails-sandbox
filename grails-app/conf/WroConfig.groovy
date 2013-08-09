@@ -55,43 +55,23 @@ wro.encoding = null
  */
 wro.managerFactoryClassName = "wro4j.grails.plugin.GrailsWroManagerFactory"
 
-wro.grailsWroManagerFactory.preProcessors = [
-	new CssUrlRewritingProcessor(),
-	new CssImportPreProcessor(),
-	new SemicolonAppenderPreProcessor(),
-	new JSMinProcessor(),
-	new JawrCssMinifierProcessor(),
-	ExtensionsAwareProcessorDecorator.decorate(new CoffeeScriptProcessor()).addExtension("coffee"),
-]
-wro.grailsWroManagerFactory.postProcessors = [
-	new CssVariablesProcessor(),
-	new LessCssProcessor(),
-]
-
-
-
 /** PreProcessor used by wro4j.grails.plugin.GrailsWroManagerFactory  */
-/**
 wro.grailsWroManagerFactory.preProcessors = [
 	new CssUrlRewritingProcessor(),
 	new CssImportPreProcessor(),
-//    new BomStripperPreProcessor(),
 	new SemicolonAppenderPreProcessor(),
 	new JSMinProcessor(),
 	new JawrCssMinifierProcessor(),
 	ExtensionsAwareProcessorDecorator.decorate(new CoffeeScriptProcessor()).addExtension("coffee"),
-	
 ]
-**/
-
 
 /** postProcessor used by wro4j.grails.plugin.GrailsWroManagerFactory  */
-/**
 wro.grailsWroManagerFactory.postProcessors = [
 	new CssVariablesProcessor(),
-	ExtensionsAwareProcessorDecorator.decorate(new LessCssProcessor()).addExtension("less"),
+	new LessCssProcessor()
+//	the following DO NOT work
+//	ExtensionsAwareProcessorDecorator.decorate(new LessCssProcessor()).addExtension("less"),
 ]
-**/
 
 /** uriLocator used by wro4j.grails.plugin.GrailsWroManagerFactory  */
 wro.grailsWroManagerFactory.uriLocators = [
