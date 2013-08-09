@@ -75,9 +75,10 @@ environments {
 log4j = {
     // Example of changing the log pattern for the default console appender:
     //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    appenders {
+		// console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+        console name:'stdout', layout:pattern(conversionPattern: '%c %m%n')
+    }
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
@@ -90,6 +91,7 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+	debug  'ro.isdc.wro'
 }
 
 // Uncomment and edit the following lines to start using Grails encoding & escaping improvements
