@@ -7,4 +7,7 @@ groups {
   bootstrap {
 	css(minimize: false, "/less/lib/bootstrap/bootstrap.less")
   }
+  coffee {
+	js "/coffee/script-test.coffee"
+  }
 }

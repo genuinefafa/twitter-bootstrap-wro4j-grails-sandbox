@@ -62,7 +62,9 @@ wro.grailsWroManagerFactory.preProcessors = [
 	new SemicolonAppenderPreProcessor(),
 	new JSMinProcessor(),
 	new JawrCssMinifierProcessor(),
-	ExtensionsAwareProcessorDecorator.decorate(new CoffeeScriptProcessor()).addExtension("coffee"),
+	new CoffeeScriptProcessor()
+	// the following does not auto reload resources while developmnet
+	// ExtensionsAwareProcessorDecorator.decorate(new CoffeeScriptProcessor()).addExtension("coffee"),
 ]
 
 /** postProcessor used by wro4j.grails.plugin.GrailsWroManagerFactory  */
@@ -95,6 +97,7 @@ environments {
   }
   development {
 	wro.debug = true
+	wro.resourceWatcherUpdatePeriod=5
   }
   test {
 	wro.debug = true

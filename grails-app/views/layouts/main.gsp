@@ -20,6 +20,7 @@
 		<g:layoutHead />
 	    <wro:css group="bootstrap"/>
 	    <wro:js group="bootstrap"/>		
+	    <wro:js group="coffee"/>
 	</head>
 	<body>
 
