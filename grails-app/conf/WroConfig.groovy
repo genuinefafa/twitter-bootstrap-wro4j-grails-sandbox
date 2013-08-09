@@ -97,6 +97,7 @@ environments {
   }
   development {
 	wro.debug = true
+	// http://stackoverflow.com/questions/17935629/is-there-a-way-to-configure-wro4j-to-pick-up-changed-files-without-restart-durin
 	wro.resourceWatcherUpdatePeriod=5
   }
   test {
